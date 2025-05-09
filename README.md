@@ -4,9 +4,8 @@ A Shopify embedded app that adds "Save for Later / Wishlist" functionality to yo
 
 ## Features
 
-- Product listing with "Add to Cart" and "Save for Later" functionality
+- Product listing with "Add to Cart" and "Save for Later/Wishlist" functionality
 - Persistent wishlist using localStorage
-- Dedicated wishlist page with "Remove" and "Move to Cart" actions
 - Built with Shopify Polaris components for consistent UI/UX
 - Fully responsive design
 
