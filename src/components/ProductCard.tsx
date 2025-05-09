@@ -5,9 +5,10 @@ import { useWishlist } from '../context/WishlistContext';
 
 interface ProductCardProps {
   product: Product;
+  showMoveToCart?: boolean;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, showMoveToCart }: ProductCardProps) {
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const inWishlist = isInWishlist(product.id);
 
@@ -24,15 +25,43 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold">${product.price}</span>
           <div className="flex gap-2">
-            <button 
-              onClick={() => inWishlist ? removeFromWishlist(product.id) : addToWishlist(product.id)}
-              className={`p-2 rounded-full ${inWishlist ? 'bg-red-100 text-red-500' : 'bg-gray-100 text-gray-500'} hover:bg-opacity-80 transition-colors`}
-            >
-              <Heart className={`w-5 h-5 ${inWishlist ? 'fill-current' : ''}`} />
-            </button>
-            <button className="p-2 rounded-full bg-gray-100 text-gray-500 hover:bg-opacity-80 transition-colors">
-              <ShoppingCart className="w-5 h-5" />
-            </button>
+            {showMoveToCart ? (
+              <>
+                <button 
+                  onClick={() => removeFromWishlist(product.id)}
+                  className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                >
+                  <Heart className="w-5 h-5" />
+                  Remove
+                </button>
+                <button 
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  Move to Cart
+                </button>
+              </>
+            ) : (
+              <>
+                <button 
+                  onClick={() => inWishlist ? removeFromWishlist(product.id) : addToWishlist(product.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded ${
+                    inWishlist 
+                      ? 'bg-red-100 text-red-500 hover:bg-red-200' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  } transition-colors`}
+                >
+                  <Heart className={`w-5 h-5 ${inWishlist ? 'fill-current' : ''}`} />
+                  {inWishlist ? 'Saved' : 'Save for Later'}
+                </button>
+                <button 
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  Add to Cart
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
